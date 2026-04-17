@@ -1,0 +1,20 @@
+{
+  "short_name": "Snapchat",
+  "name": "Snapchat Hacker",
+  "icons": [
+    {
+      "src": "https://pngimg.com/uploads/snapchat/snapchat_PNG29.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://pngimg.com/uploads/snapchat/snapchat_PNG29.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFFC00",
+  "theme_color": "#FFFC00"
+}
